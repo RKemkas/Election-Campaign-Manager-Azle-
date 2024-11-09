@@ -2,8 +2,9 @@
 # Election Campaign Manager 
 
 ## Overview
+The Campaign Management Canister is a decentralized application (DApp) built on the Internet Computer Protocol (ICP) using the Azle framework. This canister provides a robust and secure platform for managing campaigns, donations, expenses, voter outreach activities, secure messaging, and notifications, while ensuring user roles and permissions are strictly enforced.
 
-This is a decentralized platform to manage DJ events, song requests, tips, playlists, and ratings. Users can create profiles, request songs, tip DJs, rate DJs, and manage events and playlists. The platform uses Azle and Dfinity for canister management.
+Designed with scalability and modularity in mind, this canister enables the creation and management of campaigns, facilitates donation collection, tracks expenses, manages voter outreach programs, and allows secure communication between users. The system also integrates a notification mechanism to inform users of important updates.
 
 ## Features
 
