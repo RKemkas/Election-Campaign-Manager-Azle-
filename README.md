@@ -1,73 +1,127 @@
 
-# Election Campaign Manager 
+# Election Campaign Manager
 
-## Overview
-The Campaign Management Canister is a decentralized application (DApp) built on the Internet Computer Protocol (ICP) using the Azle framework. This canister provides a robust and secure platform for managing campaigns, donations, expenses, voter outreach activities, secure messaging, and notifications, while ensuring user roles and permissions are strictly enforced.
+The Election Campaign Manager is a decentralized application (DApp) built on the Internet Computer Protocol (ICP) using the Azle framework. This canister provides a robust and secure platform for managing campaigns, donations, expenses, voter outreach activities, secure messaging, and notifications, while ensuring user roles and permissions are strictly enforced.
 
 Designed with scalability and modularity in mind, this canister enables the creation and management of campaigns, facilitates donation collection, tracks expenses, manages voter outreach programs, and allows secure communication between users. The system also integrates a notification mechanism to inform users of important updates.
 
 ## Features
 
-### User Profile Management
-- Create user profiles with role-based access (`RegularUser`, `Admin`, `DJ`).
-- Update user profiles with validation checks.
-- Fetch user profiles by ID or retrieve all user profiles.
+- **User Management**: Create and retrieve users by their username or role (Admin, Campaign Manager, Donor).
+- **Campaign Management**: Create, update, and retrieve campaigns.
+- **Donation Management**: Create donations, and retrieve donations by ID or campaign.
+- **Expense Management**: Record and retrieve expenses related to campaigns.
+- **Voter Outreach Management**: Manage outreach activities for campaigns.
+- **Secure Message Management**: Send and retrieve secure messages related to campaigns.
+- **Notification Management**: Send and retrieve notifications related to campaigns.
 
-### Song Requests
-- Users can make song requests with validation to ensure only non-DJ users can request songs.
-- Song requests are assigned a `Pending` or `Played` status.
+## Data Models
 
-### Tips Management
-- Users can tip DJs, and tips are stored with a `Pending` or `Completed` status.
-- Tips are reflected in the DJ's leaderboard stats, updating total tips and average rating.
+### User
 
-### Event Management
-- DJs can create events with venue and capacity details.
-- Events are scheduled with validation for proper input fields.
+- `id`: Unique identifier for the user.
+- `owner`: Principal of the user.
+- `username`: Username of the user.
+- `role`: Role of the user (Admin, Campaign Manager, Donor).
+- `points`: Points associated with the user.
+- `created_at`: Timestamp of when the user was created.
 
-### Playlists
-- DJs can create playlists associated with their events.
-- Playlists are linked to both the DJ and the event.
+### Campaign
 
-### Ratings and Reviews
-- Users can rate DJs and leave reviews.
-- Ratings are reflected in the DJ's leaderboard stats, updating total ratings and average rating.
+- `id`: Unique identifier for the campaign.
+- `name`: Name of the campaign.
+- `description`: Description of the campaign.
+- `created_by`: User ID of the campaign creator.
+- `created_at`: Timestamp of when the campaign was created.
+- `updated_at`: Timestamp of when the campaign was last updated.
 
-### Leaderboards
-- Leaderboards track DJ performance, total tips, total ratings, and average rating.
-- DJs can be searched based on ratings.
+### Donation
 
-## Canister Operations
+- `id`: Unique identifier for the donation.
+- `campaign_id`: ID of the campaign this donation is associated with.
+- `donor_name`: Name of the donor.
+- `amount`: Amount of the donation.
+- `created_at`: Timestamp of when the donation was made.
 
-### User Profile Operations
-- **createUserProfile**: Create a user profile with validation.
-- **getUserProfile**: Get a user profile by ID.
-- **updateUserProfile**: Update a user profile with validation.
-- **getUserProfiles**: Fetch all user profiles.
+### Expense
 
-### Song Request Operations
-- **createSongRequest**: Create a song request with validation.
-- **getSongRequests**: Fetch song requests.
+- `id`: Unique identifier for the expense.
+- `campaign_id`: ID of the campaign this expense is associated with.
+- `description`: Description of the expense.
+- `amount`: Amount of the expense.
+- `created_at`: Timestamp of when the expense was recorded.
 
-### Tip Operations
-- **createTip**: Create a tip for a DJ with validation and leaderboard updates.
+### Voter Outreach
 
-### Event Operations
-- **createEvent**: Create an event for DJs with validation.
-- **getAllEvents**: Fetch all events.
-- **getEventByName**: Fetch events by name.
+- `id`: Unique identifier for the voter outreach activity.
+- `campaign_id`: ID of the campaign this outreach is associated with.
+- `activity`: Description of the outreach activity.
+- `date`: Date of the outreach activity.
+- `status`: Status of the outreach activity.
+- `created_at`: Timestamp of when the outreach was recorded.
 
-### Playlist Operations
-- **createPlaylist**: Create a playlist for an event with validation.
-- **getPlaylistByDjName**: Get playlists by DJ name.
-- **getPlaylistByEventId**: Get playlists by event ID.
+### Secure Message
 
-### Rating Operations
-- **createRating**: Rate a DJ and update the leaderboard.
+- `id`: Unique identifier for the message.
+- `campaign_id`: ID of the campaign this message is associated with.
+- `sender`: Username of the sender.
+- `content`: Content of the message.
+- `created_at`: Timestamp of when the message was sent.
 
-### Leaderboard Operations
-- **getLeaderboard**: Fetch the leaderboard.
-- **searchDjs**: Search DJs by rating.
+### Notification
+
+- `id`: Unique identifier for the notification.
+- `campaign_id`: ID of the campaign this notification is associated with.
+- `message`: Content of the notification.
+- `created_at`: Timestamp of when the notification was created.
+
+## Functions
+
+### User Management
+
+- `createUser`: Create a new user with a specified role and username.
+- `getUsers`: Get all users.
+- `getUserByUsername`: Get a user by their username.
+- `getUsersByRole`: Get users by their role (Admin, Campaign Manager, Donor).
+
+### Campaign Management
+
+- `createCampaign`: Create a new campaign.
+- `updateCampaign`: Update an existing campaign.
+- `getCampaigns`: Get all campaigns.
+- `getCampaignById`: Get a campaign by its ID.
+
+### Donation Management
+
+- `createDonation`: Create a new donation.
+- `getDonationById`: Get a donation by its ID.
+- `getDonationsByCampaignId`: Get all donations associated with a specific campaign.
+
+### Expense Management
+
+- `createExpense`: Record a new expense.
+- `getExpensesByCampaignId`: Get all expenses associated with a specific campaign.
+
+### Voter Outreach Management
+
+- `createVoterOutreach`: Record a new voter outreach activity.
+- `getVoterOutreachByCampaignId`: Get all voter outreach activities for a specific campaign.
+
+### Secure Message Management
+
+- `createMessage`: Send a secure message.
+- `getMessagesByCampaignId`: Get all messages for a specific campaign.
+
+### Notification Management
+
+- `getNotificationsByCampaignId`: Get all notifications for a specific campaign.
+
+## Error Handling
+
+- **NotFound**: Data not found for the specified query.
+- **InvalidPayload**: Provided data is invalid or incomplete.
+- **Unauthorized**: User does not have the necessary permissions to perform an action.
+- **ValidationError**: The input data failed validation checks.
 
 
 
